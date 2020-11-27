@@ -3,10 +3,30 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Livestreaming the child</title>
+    <title>Watch the child</title>
+    <style type="text/css">
+html, body {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+body {   
+	margin:0;
+	padding: 0;
+	background:#F0F0F0;
+}
+video {
+	margin: 0;
+	padding: 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+    </style>
   </head>
   <body>
-    <h1>The child!</h1>
-    <video src="stream.m3u8" controls autoplay></video>
+    <video muted controls autoplay>
+      <source src="stream.m3u8" type="application/x-mpegURL">
+    </video>
   </body>
 </html>
