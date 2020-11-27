@@ -11,12 +11,9 @@ exec ffmpeg \
 		-framerate 15 -video_size 640x480 \
 		-i /dev/video0 \
 	-f alsa -ac 1 -i hw:1 \
-	-c:v libx264 \
-		-crf 21 \
-		-profile:v main -level 3.1 \
+	-c:v h264_omx \
+		-b:v 1500k \
 		-pix_fmt yuv420p \
-		-preset veryfast \
-		-tune zerolatency \
 		-g 15 \
 		-sc_threshold 0 \
 	-c:a aac -b:a 40k -ac 2 \
