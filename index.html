@@ -25,8 +25,27 @@ video {
     </style>
   </head>
   <body>
-    <video muted controls autoplay playsinline>
-      <source src="stream.m3u8" type="application/x-mpegURL">
-    </video>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <video id="video" muted controls autoplay playsinline></video>
+<script>
+  var video = document.getElementById('video');
+  var videoSrc = 'stream.m3u8';
+  if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = videoSrc;
+    video.addEventListener('loadedmetadata', function() {
+      video.play();
+    });
+  //
+  // If no native HLS support, check if hls.js is supported
+  //
+  } else if (Hls.isSupported()) {
+    var hls = new Hls();
+    hls.loadSource(videoSrc);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED, function() {
+      video.play();
+    });
+  }
+</script>
   </body>
 </html>
