@@ -5,47 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Watch the child</title>
     <style type="text/css">
-html, body {
-	margin: 0 !important;
-	padding: 0 !important;
-}
-body {   
-	margin:0;
-	padding: 0;
-	background: black;
-}
-video {
-	margin: 0;
-	padding: 0;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-}
+      html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background: black;
+      }
+      video {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }
+      #clock {
+        color: white; text-align: right; padding: 1em;
+      }
     </style>
   </head>
   <body>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <video id="video" muted controls autoplay playsinline></video>
-<script>
-  var video = document.getElementById('video');
-  var videoSrc = 'stream.m3u8';
-  if (video.canPlayType('application/vnd.apple.mpegurl')) {
-    video.src = videoSrc;
-    video.addEventListener('loadedmetadata', function() {
-      video.play();
-    });
-  //
-  // If no native HLS support, check if hls.js is supported
-  //
-  } else if (Hls.isSupported()) {
-    var hls = new Hls();
-    hls.loadSource(videoSrc);
-    hls.attachMedia(video);
-    hls.on(Hls.Events.MANIFEST_PARSED, function() {
-      video.play();
-    });
-  }
-</script>
+    <div id="clock"></div>
+    <script>
+      var video = document.getElementById('video');
+      var videoSrc = 'stream.m3u8';
+      if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = videoSrc;
+        video.addEventListener('loadedmetadata', function() {
+          video.play();
+        });
+      } else if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource(videoSrc);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+          video.play();
+        });
+      }
+    </script>
+    <script>
+      var clock = document.getElementById('clock');
+      setInterval(function() {
+        clock.innerHTML = "Now is " + new Date().toString();
+      }, 100);
+    </script>
   </body>
 </html>
