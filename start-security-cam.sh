@@ -10,6 +10,7 @@ if [ "${input:0:7}" != "rtsp://" ]; then
 fi
 
 exec ffmpeg \
-	-i "$input" \
-	-c:v copy -c:a copy \
-	-f hls -hls_time 1 -hls_list_size 5 -hls_flags delete_segments+program_date_time stream.m3u8
+	-use_wallclock_as_timestamps 1 -i "$input" \
+	-c:v copy -g 30 -sc_threshold 0 \
+	-c:a copy \
+	-f hls -hls_time 4 -hls_list_size 100 -hls_flags delete_segments+program_date_time stream.m3u8
